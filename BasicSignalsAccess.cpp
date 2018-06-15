@@ -6,6 +6,7 @@
 #include "filesystem/directory_type.h"
 #include "filesystem/other_type.h"
 
+#include "command_handling/shell_usage.h"
 
 	BasicSignalsAccess::BasicSignalsAccess(BasicWidgetsAccess *w,BasicDataAccess *d){
 		widgets=w;
@@ -16,9 +17,23 @@
 		widgets->copy_button->signal_clicked().connect(sigc::mem_fun(*this,&BasicSignalsAccess::on_clicked_copy_button));
 		widgets->move_button->signal_clicked().connect(sigc::mem_fun(*this,&BasicSignalsAccess::on_clicked_move_button));
 		widgets->delete_button->signal_clicked().connect(sigc::mem_fun(*this,&BasicSignalsAccess::on_clicked_delete_button));
-	
-	
+		widgets->left_command_button->signal_clicked().connect(sigc::mem_fun(*this,&BasicSignalsAccess::on_clicked_left_command_button));
+		widgets->right_command_button->signal_clicked().connect(sigc::mem_fun(*this,&BasicSignalsAccess::on_clicked_right_command_button));
+		
 	}
+	
+
+	void BasicSignalsAccess::on_clicked_left_command_button(){
+		shell_usage::run_command(widgets->left_command_entry->get_text(),widgets->left_command_view->get_buffer(),widgets->left_path_entry->get_text());
+		on_activate_left_path_entry();
+	};
+	void BasicSignalsAccess::on_clicked_right_command_button(){
+		shell_usage::run_command(widgets->right_command_entry->get_text(),widgets->right_command_view->get_buffer(),widgets->right_path_entry->get_text());
+		on_activate_right_path_entry();
+	};
+	
+	
+	
 	BasicSignalsAccess::~BasicSignalsAccess(){
 		
 	}

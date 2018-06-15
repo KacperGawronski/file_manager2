@@ -1,5 +1,7 @@
 #include "BasicWidgetsAccess.h"
 BasicWidgetsAccess::BasicWidgetsAccess(Glib::RefPtr<Gtk::Builder> &builder){
+	builder->get_widget("left_command_button",left_command_button);
+	builder->get_widget("right_command_button",right_command_button);
 	builder->get_widget("left_path_entry",left_path_entry);
 	builder->get_widget("right_path_entry",right_path_entry);
 	builder->get_widget("left_command_entry",left_command_entry);

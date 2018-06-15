@@ -22,10 +22,11 @@ class BasicSignalsAccess{
 		~BasicSignalsAccess();
 		void on_activate_left_path_entry();
 		void on_activate_right_path_entry();
-		
 		void on_clicked_copy_button();
 		void on_clicked_move_button();
 		void on_clicked_delete_button();
 		
+		void on_clicked_left_command_button();
+		void on_clicked_right_command_button();
 };
 #endif

@@ -232,10 +232,12 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="copy_button">
-                    <property name="label" translatable="yes">button</property>
+                    <property name="label">gtk-copy</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -244,7 +246,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="move_button">
-                    <property name="label" translatable="yes">button</property>
+                    <property name="label" translatable="yes">&lt;&gt;Move</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -256,10 +258,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="delete_button">
-                    <property name="label" translatable="yes">button</property>
+                    <property name="label">gtk-delete</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="always_show_image">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>

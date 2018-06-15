@@ -15,6 +15,7 @@ DirectoryType::~DirectoryType(){delete this->content;}
 
 void DirectoryType::copy(std::string destination){
 	if(destination.at(destination.length()-1)!='/')destination+="/";
+	std::cout<<destination<<std::endl;
 	struct stat st = {0};
 	if(stat((destination+this->name).c_str(), &st) == -1) {
 		mkdir((destination+this->name).c_str(), 0700);
@@ -28,11 +29,8 @@ void DirectoryType::copy(std::string destination){
 		}else if(child->get_filesystem_entry_type()=="file"){
 			current=new FileType(child);
 		}
-		if(destination.at(destination.length()-1)!='/'){
-			current->copy(destination+'/'+current->path.substr(this->path.length()+1,current->path.length()-this->path.length()-1));
-		}else{
-			current->copy(destination+current->path.substr(this->path.length(),current->path.length()-this->path.length()));
-		}
+		current->copy(destination+this->name);
+		//
 		delete current;
 		delete child;
 	}

@@ -13,6 +13,7 @@ class BasicWidgetsAccess{
 		Glib::RefPtr<Gtk::ListStore> left_tree_model;
 		Glib::RefPtr<Gtk::ListStore> right_tree_model;
 		Gtk::Button *copy_button,*move_button,*delete_button;
+		Gtk::Button *left_command_button,*right_command_button;
 		ModelColumns model_columns_left, model_columns_right;
 	BasicWidgetsAccess(Glib::RefPtr<Gtk::Builder> &builder);
 	~BasicWidgetsAccess();

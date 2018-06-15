@@ -55,7 +55,7 @@ namespace FilesystemManagement{
 			int get_gid();
 			int get_uid();
 			int get_nlinks();
-
+			mode_t get_mode();
 			std::string get_modification_time();
 
 			unsigned long long get_size();

@@ -95,7 +95,7 @@ namespace FilesystemManagement{
 	unsigned long long FILESYSTEM_ENTRY_TYPE::get_size(){
 		return this->OS_info->st_size;
 	}
-	       int open(const char *pathname, int flags, mode_t mode);
+	//int open(const char *pathname, int flags, mode_t mode);
 	std::string FILESYSTEM_ENTRY_TYPE::get_permissions(){
 		
 		char perm[]={ 
@@ -115,7 +115,9 @@ namespace FilesystemManagement{
 #else
 #error Not implemented
 #endif
-	
+	mode_t FILESYSTEM_ENTRY_TYPE::get_mode(){
+		return this->OS_info->st_mode;
+	}
 	
 	std::string FILESYSTEM_ENTRY_TYPE::get_path(){
 		return this->path;
