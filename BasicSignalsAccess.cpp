@@ -135,18 +135,25 @@
 		refTreeSelection->selected_foreach_iter(sigc::mem_fun(*this, &BasicSignalsAccess::copy_from_right) );
 		refTreeSelection = this->widgets->left_tree_view->get_selection();
 		refTreeSelection->selected_foreach_iter(sigc::mem_fun(*this, &BasicSignalsAccess::copy_from_left) );
+		on_activate_right_path_entry();
+		on_activate_left_path_entry();
+	
 	}
 	void BasicSignalsAccess::copy_from_left(const Gtk::TreeModel::iterator& iter){
 		Gtk::TreeModel::Row row = *iter;
-		std::string dir = data->get_left_path();
-		system(("cp "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_right.entry_name]+" "+data->get_right_path()).c_str());
-		on_activate_right_path_entry();
+		std::string dir = data->get_right_path();
+		
+		std::stringstream id;
+		id<<row[widgets->model_columns_right.entry_name];
+		data->left_entries[id.str()]->copy(data->get_right_path());
+		//system(("cp "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_right.entry_name]+" "+data->get_right_path()).c_str());
 	}
 	void BasicSignalsAccess::copy_from_right(const Gtk::TreeModel::iterator& iter){
 		Gtk::TreeModel::Row row = *iter;
-		std::string dir = data->get_right_path();
-		system(("cp "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_right.entry_name]+" "+data->get_left_path()).c_str());
-		on_activate_left_path_entry();
+		std::stringstream id;
+		id<<row[widgets->model_columns_right.entry_name];
+		data->right_entries[id.str()]->copy(data->get_left_path());
+		//system(("cp "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_right.entry_name]+" "+data->get_left_path()).c_str());
 	}
 	
 
@@ -163,13 +170,22 @@
 	}
 	void BasicSignalsAccess::move_from_left(const Gtk::TreeModel::iterator& iter){
 		Gtk::TreeModel::Row row = *iter;
-		std::string dir = data->get_left_path();
-		system(("mv "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_left.entry_name]+" "+data->get_right_path()).c_str());
+		//std::string dir = data->get_left_path();
+		
+		std::stringstream id;
+		id<<row[widgets->model_columns_right.entry_name];
+		data->left_entries[id.str()]->move(data->get_right_path());
+		
+		//system(("mv "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_left.entry_name]+" "+data->get_right_path()).c_str());
 	}
 	void BasicSignalsAccess::move_from_right(const Gtk::TreeModel::iterator& iter){
 		Gtk::TreeModel::Row row = *iter;
-		std::string dir = data->get_right_path();
-		system(("mv "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_right.entry_name]+" "+data->get_left_path()).c_str());
+		//std::string dir = data->get_right_path();
+		
+		std::stringstream id;
+		id<<row[widgets->model_columns_right.entry_name];
+		data->right_entries[id.str()]->move(data->get_left_path());
+		//system(("mv "+dir+(dir.at(dir.length()-1)=='/'?"":"/")+row[widgets->model_columns_right.entry_name]+" "+data->get_left_path()).c_str());
 
 	}
 
@@ -186,15 +202,25 @@
 	}
 	void BasicSignalsAccess::delete_from_left(const Gtk::TreeModel::iterator& iter){
 		Gtk::TreeModel::Row row = *iter;
-		std::stringstream buffer;
+		
+		std::stringstream id;
+		id<<row[widgets->model_columns_left.entry_name];
+		data->left_entries[id.str()]->del();
+		
+		/*std::stringstream buffer;
 		std::string dir = data->get_left_path();
 		buffer<<"rm "<<dir<<(dir.at(dir.length()-1)=='/'?"":"/")<<row[widgets->model_columns_left.entry_name];
-		system(buffer.str().c_str());
+		system(buffer.str().c_str());*/
 	}
 	void BasicSignalsAccess::delete_from_right(const Gtk::TreeModel::iterator& iter){
 		Gtk::TreeModel::Row row = *iter;
-		std::stringstream buffer;
+		
+		std::stringstream id;
+		id<<row[widgets->model_columns_right.entry_name];
+		data->right_entries[id.str()]->del();
+		
+		/*std::stringstream buffer;
 		std::string dir = data->get_right_path();
 		buffer<<"rm "<<dir<<(dir.at(dir.length()-1)=='/'?"":"/")<<row[widgets->model_columns_right.entry_name];
-		system(buffer.str().c_str());
+		system(buffer.str().c_str());*/
 	}

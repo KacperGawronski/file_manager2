@@ -5,18 +5,21 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <cstdio>
+#include <errno.h>
 
 FileType::FileType(FilesystemManagement::FILESYSTEM_ENTRY_TYPE *e):FilesystemEntry(e){}
 FileType::FileType(std::string path):FilesystemEntry(path){}
 FileType::~FileType(){}
 
 void FileType::copy(std::string destination){
+	if(destination.at(destination.length()-1)!='/')destination+="/";
 	int source_fd=open(this->path.c_str(),O_RDONLY);
-	int dest_fd=creat(destination.c_str(),O_WRONLY);
+	int dest_fd=creat((destination+this->name).c_str(),O_WRONLY);
 	if(source_fd>=0&&dest_fd>=0){
 		sendfile(dest_fd,source_fd,NULL,size);
 	}else{
-		std::cout<<"Error in copying file."<<std::endl;
+		std::perror("Error:\n");
+		std::cerr<<"Error in copying file:"<<errno<<std::endl;
 	}
 }
 
@@ -24,5 +27,6 @@ void FileType::del(){
 	std::remove(this->path.c_str());
 };
 void FileType::move(std::string destination){
-	std::rename(this->path.c_str(),destination.c_str());
+	if(destination.at(destination.length()-1)!='/')destination+="/";
+	std::rename(this->path.c_str(),(destination+this->name).c_str());
 }

@@ -14,10 +14,10 @@ DirectoryType::DirectoryType(std::string path):FilesystemEntry(path){this->conte
 DirectoryType::~DirectoryType(){delete this->content;}
 
 void DirectoryType::copy(std::string destination){
-
+	if(destination.at(destination.length()-1)!='/')destination+="/";
 	struct stat st = {0};
-	if(stat(destination.c_str(), &st) == -1) {
-		mkdir(destination.c_str(), 0700);
+	if(stat((destination+this->name).c_str(), &st) == -1) {
+		mkdir((destination+this->name).c_str(), 0700);
 	}
 	auto children=this->content->get_children();
 	/*here is polymorphism*/
@@ -43,5 +43,6 @@ void DirectoryType::del(){
 	std::remove(this->path.c_str());
 };
 void DirectoryType::move(std::string destination){
-	std::rename(this->path.c_str(),destination.c_str());
+	if(destination.at(destination.length()-1)!='/')destination+="/";
+	std::rename(this->path.c_str(),(destination+this->name).c_str());
 }
